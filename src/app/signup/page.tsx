@@ -3,24 +3,47 @@
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function Signup() {
+  const router = useRouter();
   const [user, setUser] = React.useState({
     email: "",
     password: "",
     username: "",
   });
 
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [loading, setloading] = useState(false);
+
+  useEffect(() => {
+    if (
+      user.username.length > 0 &&
+      user.password.length > 0 &&
+      user.email.length > 0
+    )
+      setButtonDisabled(false);
+  }, [user]);
+
   const onSignup = async () => {
-    // Handle the signup logic here
+    try {
+      setloading(true);
+      await axios.post("/api/users/signup", user);
+      router.push("/login");
+      toast.success("User registered successfully");
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    } finally {
+      setloading(false);
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-cyan-950">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
         <h1 className="text-2xl text-indigo-950 font-bold text-center mb-4">
-          Sign Up
+          {loading ? "Processing" : "Signup"}
         </h1>
 
         <div className="mb-4">
@@ -80,9 +103,14 @@ export default function Signup() {
         <button
           onClick={onSignup}
           type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          disabled={buttonDisabled} // Disables the button
+          className={`w-full p-2 rounded-lg font-medium transition-all duration-300 ${
+            buttonDisabled
+              ? "opacity-50 bg-gray-400 cursor-not-allowed"
+              : "opacity-100 bg-blue-600 hover:bg-blue-700 text-white"
+          }`}
         >
-          Sign Up
+          Signup
         </button>
 
         <p className="mt-4 text-center text-sm text-gray-700">
