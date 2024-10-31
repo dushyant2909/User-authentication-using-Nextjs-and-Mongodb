@@ -40,8 +40,8 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cyan-950">
-      <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
+    <div className="min-h-screen flex items-center justify-center bg-cyan-800">
+      <div className="bg-white border border-black shadow-lg rounded-lg p-8 max-w-md w-full">
         <h1 className="text-2xl text-indigo-950 font-bold text-center mb-4">
           {loading ? "Processing" : "Signup"}
         </h1>

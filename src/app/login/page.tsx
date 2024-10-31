@@ -25,6 +25,7 @@ export default function Login() {
     try {
       setloading(true);
       const response = await axios.post("/api/users/login", user);
+      router.push(`/profile/${response.data.userId}`);
       toast.success("Logged in successfully");
     } catch (error: any) {
       toast.error(error.response.data.message);
@@ -34,8 +35,8 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cyan-950">
-      <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
+    <div className="min-h-screen flex items-center justify-center bg-cyan-800">
+      <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full border border-black">
         <h1 className="text-2xl text-indigo-950 font-bold text-center mb-4">
           {loading ? "Processing" : "Login"}
         </h1>
