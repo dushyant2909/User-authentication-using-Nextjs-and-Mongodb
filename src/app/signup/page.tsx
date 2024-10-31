@@ -33,7 +33,11 @@ export default function Signup() {
       router.push("/login");
       toast.success("User registered successfully");
     } catch (error: any) {
-      toast.error(error.response.data.message);
+      console.log(
+        "Error during signup::",
+        error.response.data.message || error.message
+      );
+      toast.error(error.response.data.message || error.message);
     } finally {
       setloading(false);
     }

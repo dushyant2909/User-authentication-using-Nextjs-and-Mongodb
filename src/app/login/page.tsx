@@ -25,10 +25,14 @@ export default function Login() {
     try {
       setloading(true);
       const response = await axios.post("/api/users/login", user);
-      router.push("/profile");
+      router.push("/");
       toast.success("Logged in successfully");
     } catch (error: any) {
-      toast.error(error.response.data.message);
+      console.log(
+        "Error in login::",
+        error.response.data.message || error.message
+      );
+      toast.error(error.response.data.message || error.message);
     } finally {
       setloading(false);
     }

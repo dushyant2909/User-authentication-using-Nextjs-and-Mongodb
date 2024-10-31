@@ -14,7 +14,7 @@ export function middleware(request: NextRequest) {
 
   //  Means if token is present and user is accessing login then redirect him
   if (isPublicPath && token) {
-    return NextResponse.redirect(new URL("/profile", request.nextUrl));
+    return NextResponse.redirect(new URL("/", request.nextUrl));
   }
 
   if (!isPublicPath && !token)
@@ -23,5 +23,5 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/", "/profile", "/login", "/signup"],
+  matcher: ["/", "/login", "/signup"],
 };
